@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liberty
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: liberty
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: liberty
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/liberty/websphere-liberty
+        imagePullPolicy: Always
+        name: liberty
